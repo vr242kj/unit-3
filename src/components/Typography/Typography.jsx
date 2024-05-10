@@ -35,7 +35,7 @@ const Typography = ({
   children,
   color = colors.primary,
   noWrap = false,
-  variant = variants.default,
+  variant = variants.title,
   wordBreak = 'normal',
 }) => {
   const { theme } = useTheme();
