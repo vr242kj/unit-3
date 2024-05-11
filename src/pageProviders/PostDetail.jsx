@@ -11,6 +11,7 @@ const PostDetail = (props) => {
     const navigate = useNavigate();
     const {id} = useParams();
     const [editMode, setEditMode] = useState(false);
+    const [createMode, setCreateMode] = useState(false);
     const [post, setPost] = useState({}); // State to hold entity data fetched from backend
     const [editedPost, setEditedPost] = useState({});
     const [successSnackbarOpen, setSuccessSnackbarOpen] = useState(false);
@@ -22,24 +23,34 @@ const PostDetail = (props) => {
     };
 
     useEffect(() => {
-        fetchEntity(id);
+        fetchEntity();
     }, [id]);
 
 
-    const fetchEntity = async (id) => {
-        axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
-            .then((res) => {
-                setPost(res);
-            })
-            .catch(error => {
-                console.error('Error fetching post by id:', error);
-            })
+    const fetchEntity = async () => {
+        if (id === ":id") {
+            // setEditMode(true)
+            setCreateMode(true);
+        } else {
+            axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
+                .then((res) => {
+                    setPost(res);
+                })
+                .catch(error => {
+                    console.error('Error fetching post by id:', error);
+                })
+        }
     };
 
     const handleEditToggle = () => {
-        setValidationErrors({});
-        setEditedPost({});
-        setEditMode(!editMode);
+        if (createMode){
+            setCreateMode(!createMode);
+            handleGoBack();
+        } else {
+            setValidationErrors({});
+            setEditedPost({});
+            setEditMode(!editMode);
+        }
     };
 
     const handleInputChange = (e) => {
@@ -84,17 +95,34 @@ const PostDetail = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateFields()) {
-            axios.put(`https://jsonplaceholder.typicode.com/users/${id}`, editedPost)
-                .then((res) => {
-                    fetchEntity();
-                    setEditMode(false);
-                    setEditedPost({});
-                    setSuccessSnackbarOpen(true);
-                })
-                .catch(error => {
-                    setErrorSnackbarOpen(true);
-                    console.error('Error sending data:', error);
-                });
+            if (id === ":id") {
+                axios.post(`https://jsonplaceholder.typicode.com/users`, editedPost)
+                    .then((res) => {
+                        // console.log(res);
+                        // setPost(res);
+                        let newId = res.id;
+                        setCreateMode(false);
+                        setEditedPost({});
+                        setSuccessSnackbarOpen(true);
+                        navigate(`/posts/${newId}`);
+                    })
+                    .catch(error => {
+                        setErrorSnackbarOpen(true);
+                        console.error('Error sending data:', error);
+                    });
+            } else {
+                axios.put(`https://jsonplaceholder.typicode.com/users/${id}`, editedPost)
+                    .then((res) => {
+                        fetchEntity();
+                        setEditMode(false);
+                        setEditedPost({});
+                        setSuccessSnackbarOpen(true);
+                    })
+                    .catch(error => {
+                        setErrorSnackbarOpen(true);
+                        console.error('Error sending data:', error);
+                    });
+            }
         }
     };
 
@@ -111,7 +139,7 @@ const PostDetail = (props) => {
                     <Typography variant="h5">Детальна інформація сутності</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    {editMode ? (
+                    {(editMode || createMode) ? (
                         <Grid item xs={12}>
                             <form onSubmit={handleSubmit}>
                                 <Grid container spacing={2}>

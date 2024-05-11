@@ -17,6 +17,8 @@ import Dialog from "../components/Dialog";
 import Button from "../components/Button";
 import Link from "../components/Link";
 import {useNavigate} from "react-router-dom";
+import pageURLs from 'constants/pagesURLs';
+import * as pages from "../constants/pages";
 
 function PostList() {
     const navigate = useNavigate();
@@ -37,7 +39,7 @@ function PostList() {
     });
 
     const navigateToAddEntity = () => {
-        navigate('/posts');
+        navigate(pageURLs[pages.postDetailPage]);
     };
 
     useEffect(() => {
@@ -113,6 +115,7 @@ function PostList() {
                 setPosts(paginatedPosts);
             })
             .catch(error => {
+                // Handle error
                 console.error('Error sending data:', error);
             });
     };
