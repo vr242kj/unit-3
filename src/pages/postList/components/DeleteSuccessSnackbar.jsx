@@ -1,0 +1,22 @@
+import {useDispatch, useSelector} from "react-redux";
+import {useIntl} from "react-intl";
+import Snackbar from "../../../components/Snackbar";
+import {toggleDeleteSuccessSnackbar} from "../actions/postList";
+
+
+function DeleteSuccessSnackbar() {
+    const dispatch = useDispatch();
+    const deleteSuccessSnackbarOpen = useSelector(({ postList }) => postList.deleteSuccessSnackbarOpen);
+    const { formatMessage } = useIntl();
+
+    return (
+        <Snackbar
+            open={deleteSuccessSnackbarOpen}
+            autoHideDuration={3000}
+            onClose={() => dispatch(toggleDeleteSuccessSnackbar())}
+            message={formatMessage({ id: 'successDeleteMessage' })}
+        />
+    );
+}
+
+export default DeleteSuccessSnackbar;

@@ -1,0 +1,12 @@
+{
+  "addEntity": "Add new Post",
+  "search": "Search",
+  "username": "Username",
+  "email": "Email",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "successDeleteMessage": "The entity was successfully deleted",
+  "areYouSure": "Are you sure you want to delete this entity?",
+  "errorDuringDelete": "Error deleting entity",
+  "deletePost": "Delete entity?"
+}

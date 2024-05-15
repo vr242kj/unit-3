@@ -6,9 +6,9 @@ function Secret() {
   const { formatMessage } = useIntl();
 
   return (
-    <Typography>
-      {formatMessage({ id: 'title' })}
-    </Typography>
+        <Typography>
+          {formatMessage({ id: 'title' })}
+        </Typography>
   );
 }
 

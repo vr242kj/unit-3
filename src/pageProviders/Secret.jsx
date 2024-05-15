@@ -4,6 +4,10 @@ import React from 'react';
 
 import PageAccessValidator from './components/PageAccessValidator';
 import PageContainer from './components/PageContainer';
+import pagesURLs from "../constants/pagesURLs";
+import * as pages from "../constants/pages";
+import Button from "../components/Button";
+import Link from "../components/Link";
 
 const Secret = (props) => {
   return (
@@ -12,6 +16,11 @@ const Secret = (props) => {
     >
       <PageContainer>
         <SecretePage {...props} />
+        <Link to={{
+          pathname: `${pagesURLs[pages.postListPage]}`,
+        }}>
+          <Button>Перейти к постам</Button>
+        </Link>
       </PageContainer>
     </PageAccessValidator>
   );
