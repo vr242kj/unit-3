@@ -1,0 +1,19 @@
+{
+  "nameRequired": "Name is required",
+  "usernameRequired": "Username is required",
+  "validEmail": "Please enter a valid email address",
+  "validPhone": "Please enter a valid phone number",
+  "validWebpage": "Please enter a valid website URL",
+  "detailInfo": "Entity details",
+  "name": "Name",
+  "username": "Username",
+  "email": "Email",
+  "phone": "Phone",
+  "website": "Webpage",
+  "save": "Save",
+  "create": "Create",
+  "cancel": "Cancel",
+  "back": "Back",
+  "successfully": "Changes saved",
+  "error": "Error while saving. Please try again."
+}

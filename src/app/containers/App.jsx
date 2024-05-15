@@ -25,8 +25,8 @@ import Header from '../components/Header';
 import IntlProvider from '../components/IntlProvider';
 import MissedPage from '../components/MissedPage';
 import SearchParamsConfigurator from '../components/SearchParamsConfigurator';
-import PostList from "../../pageProviders/PostList";
-import PostDetail from "../../pageProviders/PostDetail";
+import PostList from "../../pages/postList";
+import PostDetail from "../../pages/postDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -84,6 +84,10 @@ function App() {
                     <Route
                         element={<PostDetail />}
                         path={`${pageURLs[pages.postDetailPage]}`}
+                    />
+                    <Route
+                        element={<PostDetail />}
+                        path={`${pageURLs[pages.newPostPage]}`}
                     />
                     <Route
                       element={<SecretPage />}
