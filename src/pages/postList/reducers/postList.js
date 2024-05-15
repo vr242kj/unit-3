@@ -49,22 +49,22 @@ const reducer = (state = initialState, action) => {
                 selectedPost: action.payload,
                 deleteConfirmationOpen: true,
             };
-        case ActionTypes.SET_DELETE_SUCCESS_SNACKBAR_OPEN:
-            return {
-                ...state,
-                deleteSuccessSnackbarOpen: action.payload,
-            };
-        case ActionTypes.SET_DELETE_ERROR_MESSAGE:
-            return {
-                ...state,
-                deleteErrorMessage: action.payload,
-            };
-        case ActionTypes.HANDLE_CLOSE_DELETE_CONFIRMATION:
+        case ActionTypes.SET_DELETE_CONFIRMATION_CLOSE:
             return {
                 ...state,
                 selectedPost: {},
                 deleteConfirmationOpen: false,
                 deleteErrorMessage: ''
+            };
+        case ActionTypes.TOGGLE_DELETE_SUCCESS_SNACKBAR:
+            return {
+                ...state,
+                deleteSuccessSnackbarOpen: !state.deleteSuccessSnackbarOpen,
+            };
+        case ActionTypes.SET_DELETE_ERROR_MESSAGE:
+            return {
+                ...state,
+                deleteErrorMessage: action.payload,
             };
         default:
             return state;

@@ -26,15 +26,11 @@ export const toggleEditMode = () => ({
     type: ActionTypes.TOGGLE_EDIT_MODE
 });
 
-export const setSuccessSnackbar = () => ({
+export const toggleSuccessSnackbar = () => ({
     type: ActionTypes.TOGGLE_SUCCESS_SNACKBAR
 });
 
-export const handleSnackbarClose = () => ({
-    type: ActionTypes.SET_SNACKBAR_CLOSE
-});
-
-export const setErrorSnackbar = () => ({
+export const toggleErrorSnackbar = () => ({
     type: ActionTypes.TOGGLE_ERROR_SNACKBAR
 });
 
@@ -54,34 +50,34 @@ export const fetchPostById = (id, location) => async (dispatch, getState) => {
 };
 
 export const postPost = (changePage) => async (dispatch, getState) => {
-    const editedPost = getState().postDetail.editedPost;
+    const { editedPost } = getState().postDetail;
 
     axios.post(`https://jsonplaceholder.typicode.com/users`, editedPost)
         .then((res) => {
             dispatch(toggleCreateMode())
             setEditedPost({});
-            dispatch(setSuccessSnackbar())
+            dispatch(toggleSuccessSnackbar())
             let newId = res.id;
             changePage({pathname: `/secret/posts/${newId}`});
         })
         .catch(error => {
-            dispatch(setErrorSnackbar())
+            dispatch(toggleErrorSnackbar())
             console.error('Error sending data:', error);
         });
 };
 
 export const putPost = (id, location) => async (dispatch, getState) => {
-    const editedPost = getState().postDetail.editedPost;
+    const { editedPost } = getState().postDetail;
 
     axios.put(`https://jsonplaceholder.typicode.com/users/${id}`, editedPost)
         .then((res) => {
             dispatch(fetchPostById(id, location))
             dispatch(toggleEditMode())
             dispatch(setEditedPost({}))
-            dispatch(setSuccessSnackbar())
+            dispatch(toggleSuccessSnackbar())
         })
         .catch(error => {
-            dispatch(setErrorSnackbar())
-            console.error('Error sending data:', error);
+            dispatch(toggleErrorSnackbar())
+            console.error('Error putting data:', error);
         });
 };

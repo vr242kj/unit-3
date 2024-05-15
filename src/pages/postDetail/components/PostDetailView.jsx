@@ -26,6 +26,6 @@ function PostDetailView({ post, handleGoBack, handleEditToggle }) {
             </Grid>
         </>
     );
-};
+}
 
 export default PostDetailView;

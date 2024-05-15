@@ -31,9 +31,12 @@ export const setDeleteConfirmationOpen = (open) => ({
     payload: open,
 });
 
-export const setDeleteSuccessSnackbarOpen = (open) => ({
-    type: ActionTypes.SET_DELETE_SUCCESS_SNACKBAR_OPEN,
-    payload: open,
+export const setDeleteConfirmationClose = () => ({
+    type: ActionTypes.SET_DELETE_CONFIRMATION_CLOSE
+});
+
+export const toggleDeleteSuccessSnackbar = () => ({
+    type: ActionTypes.TOGGLE_DELETE_SUCCESS_SNACKBAR
 });
 
 export const setDeleteErrorMessage = (message) => ({
@@ -41,15 +44,14 @@ export const setDeleteErrorMessage = (message) => ({
     payload: message,
 });
 
-export const handleCloseDeleteConfirmation = () => ({
-    type: ActionTypes.HANDLE_CLOSE_DELETE_CONFIRMATION
-});
+export const fetchPosts = () => (dispatch, getState) => {
+    const { currentPage, postsPerPage, filters } = getState().postList;
+    let url = 'https://jsonplaceholder.typicode.com/users';
+    // const request = (filters.username || filters.email) ? axios.post(url, filters) : axios.get(url);
+    const request = axios.get(url);
 
-export const fetchPost = () => async (dispatch, getState) => {
-    const postsPerPage = getState().postList.postsPerPage;
-    const currentPage = getState().postList.currentPage;
-    axios.get('https://jsonplaceholder.typicode.com/users')
-        .then((res) => {
+    request
+        .then(res => {
             const totalPagesCount = Math.ceil(res.length / postsPerPage);
             dispatch(setTotalPages(totalPagesCount));
 
@@ -59,41 +61,21 @@ export const fetchPost = () => async (dispatch, getState) => {
             dispatch(setPosts(paginatedPosts));
         })
         .catch(error => {
-            console.error('Error fetching posts:', error);
-        })
+            console.error('Error fetching or sending data:', error);
+        });
 };
 
 export const deletePost = (formatMessage) => async (dispatch, getState) => {
-    const selectedPost = getState().postList.selectedPost;
+    const { selectedPost } = getState().postList;
+
     await axios.delete(`https://jsonplaceholder.typicode.com/users/${selectedPost.id}`)
         .then(async () => {
-            dispatch(setDeleteSuccessSnackbarOpen(true));
-            dispatch(handleCloseDeleteConfirmation());
-            await fetchPost();
+            dispatch(toggleDeleteSuccessSnackbar());
+            dispatch(setDeleteConfirmationClose());
+            await fetchPosts();
         })
         .catch(error => {
             dispatch(setDeleteErrorMessage(formatMessage({ id: 'errorDuringDelete' })));
-            console.error('Error fetching posts:', error);
+            console.error('Error deleting post:', error);
         });
 };
-
-export const fetchPostByFilter = () => async (dispatch, getState) => {
-    const currentPage = getState().postList.currentPage;
-    const filters = getState().postList.filters;
-    const postsPerPage = getState().postList.postsPerPage;
-
-    axios.post('https://jsonplaceholder.typicode.com/users', filters)
-        .then((res) => {
-            const totalPagesCount = Math.ceil(res.length / postsPerPage);
-            dispatch(setTotalPages(totalPagesCount));
-
-            const startIndex = (currentPage - 1) * postsPerPage;
-            const endIndex = Math.min(startIndex + postsPerPage, res.length);
-            const paginatedPosts = res.slice(startIndex, endIndex);
-            dispatch(setPosts(paginatedPosts));
-        })
-        .catch(error => {
-            console.error('Error sending data:', error);
-        });
-};
-

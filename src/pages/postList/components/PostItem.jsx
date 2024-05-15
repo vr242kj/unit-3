@@ -33,6 +33,6 @@ function PostItem({ post }) {
             )}
         </ListItem>
     );
-};
+}
 
 export default PostItem;

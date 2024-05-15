@@ -1,7 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useParams} from "react-router-dom";
 import {useIntl} from "react-intl";
-import * as pages from "../../../constants/pages";
 import {postPost, putPost, setEditedPost, setValidationErrors} from "../actions/postDetail";
 import Grid from "../../../components/Grid";
 import Button from "../../../components/Button";
@@ -15,48 +14,35 @@ function PostDetailForm({ handleEditToggle }) {
     const location = useLocation();
     const { formatMessage } = useIntl();
     const { post, editedPost, validationErrors, createMode } = useSelector(({ postDetail }) => postDetail);
+    const isValidName = (name) => name && name.trim() !== '';
+    const isValidUsername = (username) => username && username.trim() !== '';
+    const isValidEmail = (email) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+    const isValidPhone = (phone) => /^\d+(-\d+)*$/.test(phone);
+    const isValidWebsite = (website) => /^(https?:\/\/)?(\w+\.)+\w{2,}(\/.*)?(\/\?.+)?$/.test(website);
+
+    const validateFields = () => {
+        const { name, username, email, phone, website } = editedPost;
+        const errors = {};
+
+        if (!isValidName(name)) errors.name = formatMessage({ id: 'nameRequired' });
+        if (!isValidUsername(username)) errors.username = formatMessage({ id: 'usernameRequired' });
+        if (!isValidEmail(email)) errors.email = formatMessage({ id: 'validEmail' });
+        if (!isValidPhone(phone)) errors.phone = formatMessage({ id: 'validPhone' });
+        if (!isValidWebsite(website)) errors.website = formatMessage({ id: 'validWebpage' });
+
+        dispatch(setValidationErrors(errors));
+        return Object.keys(errors).length === 0;
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateFields()) {
-            if (location.pathname === `/${pages.secretPage}/${pages.newPostPage}`) {
+            if (createMode) {
                 dispatch(postPost(changePage));
             } else {
                 dispatch(putPost(id, location));
             }
         }
-    };
-
-    const validateFields = () => {
-        const errors = {};
-
-        if (!editedPost.name || editedPost.name.trim() === '') {
-            errors.name = formatMessage({ id: 'nameRequired' });
-        }
-
-        if (!editedPost.username || editedPost.username.trim() === '') {
-            errors.username = formatMessage({ id: 'usernameRequired' });
-        }
-
-        if (!editedPost.email || !isValidEmail(editedPost.email)) {
-            errors.email = formatMessage({ id: 'validEmail' });
-        }
-
-        if (!/^[\d-+]+$/.test(editedPost.phone)) {
-            errors.phone = formatMessage({ id: 'validPhone' });
-        }
-
-        if (!/^(https?:\/\/)?([\w\d]+\.)+[\w\d]{2,}(\/.*)?$/.test(editedPost.website)) {
-            errors.website = formatMessage({ id: 'validWebpage' });
-        }
-
-        setValidationErrors(errors);
-        dispatch(setValidationErrors(errors))
-        return Object.keys(errors).length === 0;
-    };
-
-    const isValidEmail = (email) => {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
     return (
@@ -89,6 +75,6 @@ function PostDetailForm({ handleEditToggle }) {
             </form>
         </Grid>
     );
-};
+}
 
 export default PostDetailForm;

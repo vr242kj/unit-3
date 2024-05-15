@@ -3,7 +3,7 @@ import {useIntl} from "react-intl";
 import Dialog from "../../../components/Dialog";
 import Button from "../../../components/Button";
 import DialogActions from "../../../components/DialogActions";
-import {deletePost, handleCloseDeleteConfirmation} from "../actions/postList";
+import {deletePost, setDeleteConfirmationClose} from "../actions/postList";
 import DialogTitle from "../../../components/DialogTitle";
 import DialogContent from "../../../components/DialogContent";
 
@@ -15,7 +15,7 @@ function DeletePostDialog() {
     const { formatMessage } = useIntl();
 
     return (
-        <Dialog open={deleteConfirmationOpen} onClose={() => dispatch(handleCloseDeleteConfirmation())}>
+        <Dialog open={deleteConfirmationOpen} onClose={() => dispatch(setDeleteConfirmationClose())}>
             <DialogTitle>{formatMessage({ id: 'deletePost' })}</DialogTitle>
             <DialogContent>
                 <p>{formatMessage({ id: 'areYouSure' })}</p>
@@ -25,12 +25,12 @@ function DeletePostDialog() {
                 <Button onClick={() => dispatch(deletePost(formatMessage))} color="primary">
                     {formatMessage({ id: 'confirm' })}
                 </Button>
-                <Button onClick={() => dispatch(handleCloseDeleteConfirmation())} color="primary">
+                <Button onClick={() => dispatch(setDeleteConfirmationClose())} color="primary">
                     {formatMessage({ id: 'cancel' })}
                 </Button>
             </DialogActions>
         </Dialog>
     );
-};
+}
 
 export default DeletePostDialog;

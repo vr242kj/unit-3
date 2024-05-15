@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useIntl} from "react-intl";
 import Snackbar from "../../../components/Snackbar";
-import {handleSnackbarClose} from "../actions/postDetail";
+import {toggleErrorSnackbar, toggleSuccessSnackbar} from "../actions/postDetail";
 
 
 function ValidationSnackbar() {
@@ -14,17 +14,17 @@ function ValidationSnackbar() {
             <Snackbar
                 open={successSnackbarOpen}
                 autoHideDuration={3000}
-                onClose={() => dispatch(handleSnackbarClose())}
+                onClose={() => dispatch(toggleSuccessSnackbar())}
                 message={formatMessage({ id: 'successfully' })}
             />
             <Snackbar
                 open={errorSnackbarOpen}
                 autoHideDuration={3000}
-                onClose={() => dispatch(handleSnackbarClose())}
+                onClose={() => dispatch(toggleErrorSnackbar())}
                 message={formatMessage({ id: 'error' })}
             />
         </>
     );
-};
+}
 
 export default ValidationSnackbar;

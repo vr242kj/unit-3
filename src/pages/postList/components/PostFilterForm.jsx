@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useIntl} from "react-intl";
-import {fetchPostByFilter, setFilters} from "../actions/postList";
+import {fetchPosts, setFilters} from "../actions/postList";
 
 
 function PostFilterForm() {
@@ -11,7 +11,7 @@ function PostFilterForm() {
     return (
         <form onSubmit={(e) => {
             e.preventDefault();
-            dispatch(fetchPostByFilter());
+            dispatch(fetchPosts());
         }}>
             <label>
                 {formatMessage({ id: 'username' })}
@@ -36,6 +36,6 @@ function PostFilterForm() {
             <button type="submit">{formatMessage({ id: 'search' })}</button>
         </form>
     );
-};
+}
 
 export default PostFilterForm;

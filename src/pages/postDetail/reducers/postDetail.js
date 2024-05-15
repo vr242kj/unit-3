@@ -47,12 +47,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 errorSnackbarOpen: !state.errorSnackbarOpen
             };
-        case ActionTypes.SET_SNACKBAR_CLOSE:
-            return {
-                ...state,
-                successSnackbarOpen: false,
-                errorSnackbarOpen: false,
-            };
         default:
             return state;
     }

@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useIntl} from "react-intl";
 import Snackbar from "../../../components/Snackbar";
-import {setDeleteSuccessSnackbarOpen} from "../actions/postList";
+import {toggleDeleteSuccessSnackbar} from "../actions/postList";
 
 
 function DeleteSuccessSnackbar() {
@@ -13,10 +13,10 @@ function DeleteSuccessSnackbar() {
         <Snackbar
             open={deleteSuccessSnackbarOpen}
             autoHideDuration={3000}
-            onClose={() => dispatch(setDeleteSuccessSnackbarOpen(false))}
+            onClose={() => dispatch(toggleDeleteSuccessSnackbar())}
             message={formatMessage({ id: 'successDeleteMessage' })}
         />
     );
-};
+}
 
 export default DeleteSuccessSnackbar;

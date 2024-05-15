@@ -63,6 +63,6 @@ function PostDetail() {
             </Grid>
         </PageContainer>
     );
-};
+}
 
 export default PostDetail;

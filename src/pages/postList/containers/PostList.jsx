@@ -7,7 +7,7 @@ import * as pages from "../../../constants/pages";
 import useChangePage from "../../../misc/hooks/useChangePage";
 import {useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchPost} from "../actions/postList";
+import {fetchPosts} from "../actions/postList";
 import PostItem from "../components/PostItem";
 import DeleteSuccessSnackbar from "../components/DeleteSuccessSnackbar";
 import PaginationComponent from "../components/PaginationComponent ";
@@ -26,7 +26,7 @@ function PostList() {
     } = useSelector(({postList}) => postList);
 
     useEffect(() => {
-        dispatch(fetchPost());
+        dispatch(fetchPosts());
     }, [dispatch, currentPage, filters]);
 
     const navigateToAddPost = () => {

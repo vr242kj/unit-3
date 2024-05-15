@@ -14,6 +14,6 @@ function PaginationComponent() {
             onChange={(event, value) => dispatch(setCurrentPage(value))}
         />
     );
-};
+}
 
 export default PaginationComponent ;
