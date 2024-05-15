@@ -1,13 +1,22 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useParams} from "react-router-dom";
 import {useIntl} from "react-intl";
-import {postPost, putPost, setEditedPost, setValidationErrors} from "../actions/postDetail";
+import {
+    postPost,
+    putPost,
+    setEditedPost,
+    setValidationErrors,
+    toggleCreateMode,
+    toggleEditMode
+} from "../actions/postDetail";
 import Grid from "../../../components/Grid";
 import Button from "../../../components/Button";
 import useChangePage from "../../../misc/hooks/useChangePage";
+import pageURLs from "../../../constants/pagesURLs";
+import * as pages from "../../../constants/pages";
 
 
-function PostDetailForm({ handleEditToggle }) {
+function PostDetailForm() {
     const dispatch = useDispatch();
     const changePage = useChangePage();
     const { id } = useParams();
@@ -45,6 +54,21 @@ function PostDetailForm({ handleEditToggle }) {
         }
     };
 
+    const handleCancelButton = () => {
+        if (createMode) {
+            dispatch(toggleCreateMode())
+            handleGoBack();
+        } else {
+            dispatch(setValidationErrors({}))
+            dispatch(setEditedPost({}))
+            dispatch(toggleEditMode())
+        }
+    };
+
+    const handleGoBack = () => {
+        changePage({pathname: pageURLs[pages.postListPage]});
+    };
+
     return (
         <Grid item xs={12}>
             <form onSubmit={handleSubmit}>
@@ -69,7 +93,7 @@ function PostDetailForm({ handleEditToggle }) {
                     <Grid item xs={12}>
                         <button type="submit">{createMode ?
                             formatMessage({ id: 'create' }) : formatMessage({ id: 'save' })}</button>
-                        <Button onClick={handleEditToggle}>{formatMessage({ id: 'cancel' })}</Button>
+                        <Button onClick={handleCancelButton}>{formatMessage({ id: 'cancel' })}</Button>
                     </Grid>
                 </Grid>
             </form>

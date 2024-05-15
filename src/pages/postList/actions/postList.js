@@ -47,8 +47,7 @@ export const setDeleteErrorMessage = (message) => ({
 export const fetchPosts = () => (dispatch, getState) => {
     const { currentPage, postsPerPage, filters } = getState().postList;
     let url = 'https://jsonplaceholder.typicode.com/users';
-    // const request = (filters.username || filters.email) ? axios.post(url, filters) : axios.get(url);
-    const request = axios.get(url);
+    let request = (filters.username || filters.email) ? axios.post(url, filters) : axios.get(url);
 
     request
         .then(res => {

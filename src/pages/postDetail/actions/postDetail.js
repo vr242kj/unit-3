@@ -1,4 +1,3 @@
-import * as pages from "../../../constants/pages";
 import * as ActionTypes from '../constants/actionTypes.js';
 import axios from "axios";
 
@@ -34,19 +33,14 @@ export const toggleErrorSnackbar = () => ({
     type: ActionTypes.TOGGLE_ERROR_SNACKBAR
 });
 
-
-export const fetchPostById = (id, location) => async (dispatch, getState) => {
-    if (location.pathname === `/${pages.secretPage}/${pages.newPostPage}`) {
-        dispatch(toggleCreateMode());
-    } else {
-        axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
-            .then((res) => {
-                dispatch(setPost(res));
-            })
-            .catch(error => {
-                console.error('Error fetching post by id:', error);
-            })
-    }
+export const fetchPostById = (id) => async (dispatch) => {
+    axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
+        .then((res) => {
+            dispatch(setPost(res));
+        })
+        .catch(error => {
+            console.error('Error fetching post by id:', error);
+        })
 };
 
 export const postPost = (changePage) => async (dispatch, getState) => {

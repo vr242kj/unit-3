@@ -2,15 +2,11 @@ import React, {useEffect} from 'react';
 import PageContainer from "../../../pageProviders/components/PageContainer";
 import {useLocation, useParams} from "react-router-dom";
 import Grid from "../../../components/Grid";
-import useChangePage from "../../../misc/hooks/useChangePage";
 import * as pages from "../../../constants/pages";
-import pageURLs from "../../../constants/pagesURLs";
 import {useDispatch, useSelector} from "react-redux";
 import {
     fetchPostById,
-    setEditedPost,
-    setValidationErrors,
-    toggleCreateMode, toggleEditMode
+    toggleCreateMode
 } from "../actions/postDetail";
 import ValidationSnackbar from "../components/ValidationSnackbar";
 import PostDetailView from "../components/PostDetailView";
@@ -20,44 +16,27 @@ import PostDetailForm from "../components/PostDetailForm";
 function PostDetail() {
     const {id} = useParams();
     const location = useLocation();
-    const changePage = useChangePage();
     const dispatch = useDispatch();
     const {
         editMode,
-        createMode,
-        post
+        createMode
     } = useSelector(({postDetail}) => postDetail);
 
-    const handleGoBack = () => {
-        changePage({pathname: pageURLs[pages.postListPage]});
-    };
+    useEffect(() => {
+        if (location.pathname === `/${pages.secretPage}/${pages.newPostPage}`) {
+            dispatch(toggleCreateMode());
+        }
+    }, []);
 
     useEffect(() => {
-        dispatch(fetchPostById(id, location))
-    }, [dispatch, id, location]);
-
-    const handleEditToggle = () => {
-        if (createMode) {
-            dispatch(toggleCreateMode())
-            handleGoBack();
-        } else {
-            dispatch(setValidationErrors({}))
-            dispatch(setEditedPost({}))
-            dispatch(toggleEditMode())
-        }
-    };
+        dispatch(fetchPostById(id))
+    }, [dispatch, id]);
 
     return (
         <PageContainer>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    {(editMode || createMode) ? (
-                        <PostDetailForm
-                            handleEditToggle={handleEditToggle}
-                        />
-                    ) : (
-                        <PostDetailView post={post} handleGoBack={handleGoBack} handleEditToggle={handleEditToggle}/>
-                    )}
+                    {(editMode || createMode) ? <PostDetailForm/> : <PostDetailView/>}
                 </Grid>
                 <ValidationSnackbar/>
             </Grid>
