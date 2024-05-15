@@ -5,7 +5,6 @@ import Grid from "../../../components/Grid";
 import useChangePage from "../../../misc/hooks/useChangePage";
 import * as pages from "../../../constants/pages";
 import pageURLs from "../../../constants/pagesURLs";
-import {useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {
     fetchPostById,
@@ -22,7 +21,6 @@ function PostDetail() {
     const {id} = useParams();
     const location = useLocation();
     const changePage = useChangePage();
-    const {formatMessage} = useIntl();
     const dispatch = useDispatch();
     const {
         editMode,

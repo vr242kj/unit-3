@@ -6,11 +6,6 @@ export const setPosts = (paginatedPosts) => ({
     payload: paginatedPosts,
 });
 
-export const setSelectedPost = (post) => ({
-    type: ActionTypes.SET_SELECTED_POST,
-    payload: post,
-});
-
 export const setHoveredEntityIndex = (index) => ({
     type: ActionTypes.SET_HOVERED_ENTITY_INDEX,
     payload: index,

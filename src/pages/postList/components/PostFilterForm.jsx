@@ -3,7 +3,7 @@ import {useIntl} from "react-intl";
 import {fetchPostByFilter, setFilters} from "../actions/postList";
 
 
-const PostFilterForm = () => {
+function PostFilterForm() {
     const dispatch = useDispatch();
     const filters = useSelector(({ postList }) => postList.filters);
     const { formatMessage } = useIntl();

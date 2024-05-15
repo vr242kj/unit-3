@@ -10,7 +10,7 @@ import Link from "../../../components/Link";
 import * as pages from "../../../constants/pages";
 
 
-const PostItem = ({ post }) => {
+function PostItem({ post }) {
     const dispatch = useDispatch();
     const hoveredEntityIndex = useSelector(({ postList }) => postList.hoveredEntityIndex);
     const { formatMessage } = useIntl();

@@ -8,7 +8,7 @@ import Button from "../../../components/Button";
 import useChangePage from "../../../misc/hooks/useChangePage";
 
 
-const PostDetailForm = ({ handleEditToggle }) => {
+function PostDetailForm({ handleEditToggle }) {
     const dispatch = useDispatch();
     const changePage = useChangePage();
     const { id } = useParams();

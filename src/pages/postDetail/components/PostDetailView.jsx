@@ -4,7 +4,7 @@ import Typography from "../../../components/Typography";
 import Button from "../../../components/Button";
 
 
-const PostDetailView = ({ post, handleGoBack, handleEditToggle }) => {
+function PostDetailView({ post, handleGoBack, handleEditToggle }) {
     const { formatMessage } = useIntl();
 
     return (

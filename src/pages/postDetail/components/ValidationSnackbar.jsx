@@ -4,7 +4,7 @@ import Snackbar from "../../../components/Snackbar";
 import {handleSnackbarClose} from "../actions/postDetail";
 
 
-const ValidationSnackbar = () => {
+function ValidationSnackbar() {
     const dispatch = useDispatch();
     const { successSnackbarOpen, errorSnackbarOpen } = useSelector(({ postDetail }) => postDetail);
     const { formatMessage } = useIntl();

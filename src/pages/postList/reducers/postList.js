@@ -21,11 +21,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 posts: action.payload,
             };
-        case ActionTypes.SET_SELECTED_POST:
-            return {
-                ...state,
-                selectedPost: action.payload,
-            };
         case ActionTypes.SET_HOVERED_ENTITY_INDEX:
             return {
                 ...state,

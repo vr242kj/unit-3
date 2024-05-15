@@ -8,7 +8,7 @@ import DialogTitle from "../../../components/DialogTitle";
 import DialogContent from "../../../components/DialogContent";
 
 
-const DeletePostDialog = () => {
+function DeletePostDialog() {
     const dispatch = useDispatch();
     const deleteConfirmationOpen = useSelector(({ postList }) => postList.deleteConfirmationOpen);
     const deleteErrorMessage = useSelector(({ postList }) => postList.deleteErrorMessage);

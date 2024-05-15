@@ -3,7 +3,7 @@ import Pagination from "../../../components/Pagination";
 import {setCurrentPage} from "../actions/postList";
 
 
-const PaginationComponent  = () => {
+function PaginationComponent() {
     const dispatch = useDispatch();
     const { totalPages, currentPage } = useSelector(({ postList }) => postList);
 

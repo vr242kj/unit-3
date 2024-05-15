@@ -4,7 +4,7 @@ import Snackbar from "../../../components/Snackbar";
 import {setDeleteSuccessSnackbarOpen} from "../actions/postList";
 
 
-const DeleteSuccessSnackbar = () => {
+function DeleteSuccessSnackbar() {
     const dispatch = useDispatch();
     const deleteSuccessSnackbarOpen = useSelector(({ postList }) => postList.deleteSuccessSnackbarOpen);
     const { formatMessage } = useIntl();
